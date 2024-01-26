@@ -61,3 +61,16 @@ end
 function ColorEx.Encode( r, g, b, a )
     return bit.bor( bit.lshift( r, 24 ), bit.lshift( g, 16 ), bit.lshift( b, 8 ), a )
 end
+
+-- Gradient for default color obj
+function ColorEx.SinGradient( Obj, First, Second )
+    local Ct = math.sin( CurTime() )
+
+    local DiffR = First.r == Second.r and First.r or Ct * ( First.r - Second.r )
+    local DiffG = First.g == Second.g and First.g or Ct * ( First.g - Second.g )
+    local DiffB = First.b == Second.b and First.b or Ct * ( First.b - Second.b )
+
+    Obj.r = math.Clamp( DiffR, 0 , 255 )
+    Obj.g = math.Clamp( DiffG, 0 , 255 )
+    Obj.b = math.Clamp( DiffB, 0 , 255 )
+end
